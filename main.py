@@ -15,8 +15,9 @@ class UserInterface:
         self.root.attributes("-topmost", True)
         self.root.resizable(False, False)
         
-        # Variable to remember the username if the username box is checked
+        # Initalize variables
         self.remembered_username = None
+        self.checkbox_state = False
         
         self.create_ui()
         
@@ -48,6 +49,8 @@ class UserInterface:
 
         # Create "Remember me" checkbox
         self.checkbox = customtkinter.CTkCheckBox(master=self.frame, text="Remember me")
+        if self.checkbox_state:
+            self.checkbox.select()
         self.checkbox.pack(pady=12, padx=10)
         
     def LogInService(self):
@@ -56,35 +59,41 @@ class UserInterface:
         self.password = self.entry2.get().strip()
 
         try:
-            # Fetch usernames and passwords from GitHub
-            usernames_response = requests.get('https://raw.githubusercontent.com/shigeosapsycho/csulbeetcode/refs/heads/main/tkinter/5%20-%20sample%20login%20system/usernames.txt')
-            passwords_response = requests.get('https://raw.githubusercontent.com/shigeosapsycho/csulbeetcode/refs/heads/main/tkinter/5%20-%20sample%20login%20system/passwords.txt')
-
-            # Check if responses were successful
-            if usernames_response.status_code == 200 and passwords_response.status_code == 200:
-                usernames = usernames_response.text.splitlines()
-                passwords = passwords_response.text.splitlines()
-
-                # Ensure the files have the same number of lines
-                if len(usernames) != len(passwords):
-                    print("Error: Username and password files do not match in length.")
-                    return
-
-                # Check if the provided credentials are correct
-                for i in range(len(usernames)):
-                    if self.username == usernames[i] and self.password == passwords[i]:
-                        CTkMessagebox(title="Login Successful", message="Login successful")
-                        if self.checkbox.get():
-                            self.remembered_username = self.username
-                        else:
-                            self.remembered_username = None
-                        self.next_scene()
-                        return
-                
-                # If no match is found
-                CTkMessagebox(title="Login Failed", message="Invalid username or password")
+            if self.username == "" or self.password == "":
+                CTkMessagebox(title="Fill in all fields", message="Please fill in all fields")
+                return
             else:
-                print("Error fetching usernames or passwords from GitHub")
+                # Fetch usernames and passwords from GitHub
+                usernames_response = requests.get('https://raw.githubusercontent.com/shigeosapsycho/TKINTLoginSystem/refs/heads/main/usernames.txt')
+                passwords_response = requests.get('https://raw.githubusercontent.com/shigeosapsycho/TKINTLoginSystem/refs/heads/main/passwords.txt')
+
+                # Check if responses were successful
+                if usernames_response.status_code == 200 and passwords_response.status_code == 200:
+                    usernames = usernames_response.text.splitlines()
+                    passwords = passwords_response.text.splitlines()
+
+                    # Ensure the files have the same number of lines
+                    if len(usernames) != len(passwords):
+                        print("Error: Username and password files do not match in length.")
+                        return
+
+                    # Check if the provided credentials are correct
+                    for i in range(len(usernames)):
+                        if self.username == usernames[i] and self.password == passwords[i]:
+                            CTkMessagebox(title="Login Successful", message="Login successful")
+                            if self.checkbox.get():
+                                self.remembered_username = self.username
+                                self.checkbox_state = True
+                            else:
+                                self.remembered_username = None
+                                self.checkbox_state = False
+                            self.next_scene()
+                            return
+                    
+                    # If no match is found
+                    CTkMessagebox(title="Login Failed", message="Invalid username or password")
+                else:
+                    print("Error fetching usernames or passwords from GitHub")
 
         except requests.RequestException as e:
             print(f"Error fetching data: {e}")
@@ -120,4 +129,4 @@ UserInterface()
 # TODO:
 # if null reject login
 # if check mark for remember me is checked, always keep it checked
-# self.check_state.set(1) no matter what after login and logout
+# self.check_state.select() no matter what after login and logout
