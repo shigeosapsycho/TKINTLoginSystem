@@ -55,7 +55,7 @@ class UserInterface:
         
     def LogInService(self):
         # Get the username and password input from the user
-        self.username = self.entry1.get().strip()
+        self.username = self.entry1.get().strip().lower()
         self.password = self.entry2.get().strip()
 
         try:
