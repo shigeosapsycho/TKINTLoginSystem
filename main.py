@@ -66,18 +66,16 @@ class UserInterface:
                 # Fetch usernames and passwords from GitHub
                 usernames_response = requests.get('https://raw.githubusercontent.com/shigeosapsycho/TKINTLoginSystem/refs/heads/main/usernames.txt')
                 passwords_response = requests.get('https://raw.githubusercontent.com/shigeosapsycho/TKINTLoginSystem/refs/heads/main/passwords.txt')
-
-                # Check if responses were successful
+                # Check if the responses were successful
                 if usernames_response.status_code == 200 and passwords_response.status_code == 200:
                     usernames = usernames_response.text.splitlines()
                     passwords = passwords_response.text.splitlines()
-
-                    # Ensure the files have the same number of lines
+                    
+                    # Ensure that the usernames and passwords are of the same length
                     if len(usernames) != len(passwords):
                         print("Error: Username and password files do not match in length.")
                         return
-
-                    # Check if the provided credentials are correct
+                    # Check if the username and password match
                     for i in range(len(usernames)):
                         if self.username == usernames[i] and self.password == passwords[i]:
                             CTkMessagebox(title="Login Successful", message="Login successful")
@@ -87,10 +85,9 @@ class UserInterface:
                             else:
                                 self.remembered_username = None
                                 self.checkbox_state = False
-                            self.next_scene()
+                            self.root.after(100, self.next_scene)
                             return
-                    
-                    # If no match is found
+                    # If no match is found, display an error message
                     CTkMessagebox(title="Login Failed", message="Invalid username or password")
                 else:
                     print("Error fetching usernames or passwords from GitHub")
@@ -102,9 +99,11 @@ class UserInterface:
         if event.keysym == "Return":
             self.LogInService()
 
-    def next_scene(self, width = 250, height = 150):
-        self.frame.destroy()
-        
+    def next_scene(self, width=250, height=150):
+        if self.frame is not None:
+            self.frame.pack_forget() # Remove the frame from the window so that it can be destroyed and not cause an error
+            self.frame.destroy()
+
         self.frame = customtkinter.CTkFrame(master=self.root, width=width, height=height)
         self.frame.pack(pady=20, padx=60, fill="both", expand=True)
 
@@ -115,18 +114,15 @@ class UserInterface:
         self.button.pack(pady=12, padx=10)
 
         self.root.geometry(f"{width}x{height}")
-        
+
     def logout(self):
-        self.frame.destroy()
-        
+        if self.frame is not None:
+            self.frame.pack_forget()
+            self.frame.destroy()
+
         self.root.geometry("500x350")
         self.create_ui()
 
+
 # Initialize the interface
 UserInterface()
-
-
-# TODO:
-# if null reject login
-# if check mark for remember me is checked, always keep it checked
-# self.check_state.select() no matter what after login and logout
