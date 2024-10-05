@@ -21,6 +21,16 @@
 ![Login Successesful](https://owo.oooooooooooooo.ooo/i/m6zzy738.png)
 ![Fill in all fields](https://owo.oooooooooooooo.ooo/i/iqo2sx48.png)
 
+### 🎥 Videos
+#### Login was successful
+![Login Example](https://owo.oooooooooooooo.ooo/i/gdnkevl4.gif)
+#### You are required to fill in all fields
+![Fill in fields](https://owo.oooooooooooooo.ooo/i/8uyh3u2y.gif)
+#### Login was unsuccessful
+![Login Unsuccessful](https://owo.oooooooooooooo.ooo/i/yo2qaqda.gif)
+#### Remember me checkbox
+![Remember Me](https://owo.oooooooooooooo.ooo/i/8p6x41kr.gif)
+
 ## ▶ Usage
 After installing the required dependencies, you can run the application using:
 ```
