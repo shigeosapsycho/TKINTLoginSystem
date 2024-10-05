@@ -1,19 +1,48 @@
 # TKINTLoginSystem
 
-## ✅ Project is finished
+## 📄 Project Overview
+``TKINTLoginSystem`` is a graphical user interface (GUI) login system built using Python and [CustomTkinter](https://github.com/TomSchimansky/CustomTkinter). It simulates a login interface with features like:
+- Username and password validation from a GitHub-hosted text file.
+- "Remember Me" functionality for user convenience.
+- A clean and simple user interface with custom widgets.
 
-I scrapped this project originally due to plenty of errors, but I fixed **all** of them. If you can give this file high-level access on MacOS, it should run fine. If you run an IDE on Windows with admin, it should launch flawlessly.
+## ✨Features
+- Dark Theme: Built with CustomTkinter to provide a modern dark appearance.
+- Username/Password Authentication: Fetches credentials from GitHub for validation.
+- "Remember Me" Option: Offers the ability to save the username for convenience.
+- Cross-Platform Compatibility: Designed to run on Windows, Linux, and MacOS with minor tweaks.
 
-Running this file on MacOS gives you an error because the program is trying to access memory, which is considered "illegal randomly." I theorize that this is caused by LogInService().
+### 🖼️ Screenshots
+#### Login Screen
+![Login Screen](https://owo.oooooooooooooo.ooo/i/x1zm6nbu.png)
 
-This project made me realize how slow Python is and will not be the goto language I will use for creating anything UI related.
+#### Message Boxes
+![Message Box](https://owo.oooooooooooooo.ooo/i/q18yc1qy.png)
+![Login Successesful](https://owo.oooooooooooooo.ooo/i/m6zzy738.png)
+![Fill in all fields](https://owo.oooooooooooooo.ooo/i/iqo2sx48.png)
 
-## ⬇️ Installation
-
-To run this file, you need any version of Python 3 and modules requests, customtkinter, and CTKMessagebox
-to install the following, you have to run:
+## ▶ Usage
+After installing the required dependencies, you can run the application using:
 ```
-pip install requests
-pip install customtkinter
-pip install ctkmessagebox
+python main.py
 ```
+
+1. Enter your username and password to log in
+2. You will receive a welcome screen if your credentials are correct.
+3. Check the "Remember Me" box to save your username for future sessions.
+
+## ⚙️ Technical Details
+- **Code Structure:** The project is organized around the ``UserInterface`` class, which manages the GUI layout, event handling, and interaction logic
+- **Login Logic:** The ``LogInService()`` method handles user authentication by fetching data from GitHub-hosted files. It fetches the .txt files and breaks them into lines and indices. The indices must match the username and password, and their lengths can not exceed one another.
+- **Cross-Platform Challenges:** Special care was taken to address issues that arise due to differences in Windows and MacOS memory access policies
+
+## 🐞 Known Issues
+- **MacOS Memory Access:** On MacOS, the application might raise a "memory access" error. This is likely caused by how Python handles GUI memory allocation differently on MacOS. Running with high-level permissions may mitigate this.
+- **Admin Rights Needed on Windows:** If using an IDE on Windows, run it as an administrator to avoid permission-related errors.
+
+## 🙏 Acknowledgments
+- **CustomTkinter Library:** I want to express my gratitude to the developers of CustomTkinter for providing a modern and user-friendly extension to Tkinter.
+- **CTkMessagebox Library:** Another special thanks to the developers who made [CTkMessageboxes](https://github.com/Akascape/CTkMessagebox) possible.
+
+## 📜 License
+This project is licensed under The Unlicense - see the [LICENSE](https://github.com/shigeosapsycho/TKINTLoginSystem/blob/main/LICENSE) file for details.
